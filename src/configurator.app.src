@@ -1,0 +1,13 @@
+{application, configurator,
+ [
+  {description, "Cache configurations pulled from multiple sources"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { configurator_app, []}},
+  {env, []}
+ ]}.
+
