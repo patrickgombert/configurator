@@ -45,3 +45,9 @@ it_recovers_from_bad_configuration_files_test() ->
   ?assertEqual(bad_config, configurator:config("bad.config")),
   tear_down().
 
+it_allows_user_defined_configurations_test() ->
+  set_up(),
+  configurator:set("test", [{key, value}]),
+  ?assertEqual([{key, value}], configurator:config("test")),
+  tear_down().
+

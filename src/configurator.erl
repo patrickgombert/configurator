@@ -1,5 +1,6 @@
 -module(configurator).
 -export([paths/0, add_path/1]).
+-export([set/2]).
 -export([config/1]).
 
 -define(CONFIGURATOR, configurator_srv).
@@ -12,4 +13,7 @@ add_path(Path) when is_list(Path) ->
 
 config(FileName) when is_list(FileName) ->
   gen_server:call(?CONFIGURATOR, {config, FileName}).
+
+set(FileName, Config) ->
+  gen_server:cast(?CONFIGURATOR, {set, FileName, Config}).
 

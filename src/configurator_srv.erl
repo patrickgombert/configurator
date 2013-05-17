@@ -14,8 +14,7 @@ handle_call(paths, _Input, State) ->
   [Paths, _] = State,
   {reply, Paths, State};
 
-handle_call({config, FileName}, _Input, State) ->
-  [Paths, Configs] = State,
+handle_call({config, FileName}, _Input, [Paths, Configs]) ->
   Response = dict:find(FileName, Configs),
   case Response of
     {ok, Config} -> {reply, Config, [Paths, Configs]};
@@ -29,10 +28,13 @@ handle_call({config, FileName}, _Input, State) ->
       end
   end.
 
-handle_cast({add_path, Path}, State) ->
-  [Paths, Configs] = State,
+handle_cast({add_path, Path}, [Paths, Configs]) ->
   AppendedPaths = Paths ++ [Path],
-  {noreply, [AppendedPaths, Configs]}.
+  {noreply, [AppendedPaths, Configs]};
+
+handle_cast({set, FileName, Config}, [Paths, Configs]) ->
+  NewConfigs = dict:store(FileName, Config, Configs),
+  {noreply, [Paths, NewConfigs]}.
 
 handle_info(_Info, State) ->
   {noreply, State}.
