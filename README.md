@@ -3,19 +3,19 @@ configurator
 *it fetches configs*
 
 ## useage ##
-Configurator accepts any number of paths that it will use to search for files. The paths are read in order until a config file is found. Once a file is found and read it will be cached.
+Configurator accepts any number of paths that it will use to search for files (notice the trailing '/'). The paths are read in order until a config file is found. Once a file is found and read it will be cached.
 
 ```erlang
 application:start(configurator).
-configurator:add_path("/some/path").
-configurator:add_path("/other/path").
+configurator:add_path("/some/path/").
+configurator:add_path("/other/path/").
 configurator:config("secret_password.conf"). % -> [{password, "super secret"}]
 ```
 
 if you need to review the paths available you can do the following:
 
 ```erlang
-configurator:paths(). % -> ["/some/path", "/other/path"]
+configurator:paths(). % -> ["/some/path/", "/other/path/"]
 ```
 
 You can also manually add configurations
